@@ -10,7 +10,7 @@ public class Ventana extends JFrame {
 
     private String anterior = "cargaPantalla";
     private String actual = "inicio";
-    private String bienvenidonombre;
+    private String user;
     private JPanel contentPane;
 
     public Ventana() {
@@ -103,12 +103,18 @@ public class Ventana extends JFrame {
         iniciar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "juego";
-                limpiarVentana();
+                user = nombre.getText();
+                if(user.equals("")){
+                    JOptionPane.showMessageDialog(null,"Ingresa un nombre para jugar!","ERROR", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    user = nombre.getText();
+                    anterior = actual;
+                    actual = "juego";
+                    limpiarVentana();
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
         return inicioPanel;
@@ -122,51 +128,48 @@ public class Ventana extends JFrame {
         juegoPanel.setSize(820, 672);
         juegoPanel.setLocation(0, 0);
         juegoPanel.setLayout(null);
-        juegoPanel.setBackground(Color.decode("#95E799"));
+        juegoPanel.setBackground(Color.decode("#7144c9"));
 
 
-        JLabel user = new JLabel("Ingresa tu nombre de usuario",JLabel.CENTER);
-        user.setFont(new Font("Arial",Font.BOLD,15));
-        user.setSize(300,80);
-        user.setLocation(100,200);
-        user.setForeground(Color.decode("#005F04"));
-        juegoPanel.add(user);
+        JLabel jugador = new JLabel(user,JLabel.CENTER);
+        jugador.setFont(new Font("Arial",Font.BOLD,15));
+        jugador.setSize(300,80);
+        jugador.setLocation(100,200);
+        jugador.setForeground(Color.decode("#ffbd59"));
+        juegoPanel.add(jugador);
 
-        JTextField username = new JTextField();
-        username.setSize(270,42);
-        username.setLocation(142,260);
-        juegoPanel.add(username);
-
-        JLabel pass = new JLabel("Ingresa tu contraseña",JLabel.CENTER);
+        JLabel pass = new JLabel("PREGUNTA SAMPLE TEXT",JLabel.CENTER);
         pass.setFont(new Font("Arial",Font.BOLD,15));
         pass.setSize(260,80);
         pass.setLocation(93,300);
         pass.setForeground(Color.decode("#005F04"));
         juegoPanel.add(pass);
 
-        JPasswordField contrasena = new JPasswordField();
-        contrasena.setSize(270,42);
-        contrasena.setLocation(142,350);
-        juegoPanel.add(contrasena);
+        JLabel imagen2 = new JLabel();
+        imagen2.setSize(200, 200);
+        ImageIcon imag2 = new ImageIcon("src/RAMSES.png");
+        ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
+        imagen2.setIcon(icono2);
+        imagen2.setLocation(290, 420);
+        juegoPanel.add(imagen2);
 
-        JButton acceder = new JButton("Acceder");
-        acceder.setSize(150,30);
-        acceder.setLocation(205,410);
-        acceder.setBackground(Color.decode("#005F04"));
-        acceder.setForeground(Color.white);
-        acceder.setBorder(null);
-        acceder.setFont(new Font("Arial", Font.BOLD, 20));
-        juegoPanel.add(acceder);
+        JButton afirmativo = new JButton("Sí");
+        afirmativo.setSize(220,35);
+        afirmativo.setLocation(205,410);
+        afirmativo.setBackground(Color.decode("#ffbd59"));
+        afirmativo.setForeground(Color.decode("#FF721C"));
+        afirmativo.setFont(new Font("Arial", Font.BOLD, 20));
+        juegoPanel.add(afirmativo);
 
-        JButton cancelarBorrar = new JButton("Borrar todo");
-        cancelarBorrar.setSize(100,30);
-        cancelarBorrar.setLocation(230,460);
-        cancelarBorrar.setBackground(Color.decode("#FF0000"));
-        cancelarBorrar.setForeground(Color.white);
-        cancelarBorrar.setBorder(null);
-        juegoPanel.add(cancelarBorrar);
+        JButton negativo = new JButton("No");
+        negativo.setSize(220,35);
+        negativo.setLocation(230,460);
+        negativo.setBackground(Color.decode("#ffbd59"));
+        negativo.setForeground(Color.decode("#FF721C"));
+        negativo.setFont(new Font("Arial", Font.BOLD, 20));
+        juegoPanel.add(negativo);
 
-        cancelarBorrar.addActionListener(new ActionListener() {
+        negativo.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
