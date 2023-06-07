@@ -1,42 +1,58 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class Ventana extends JFrame {
+    public JPanel panel = null;
 
+    private String anterior = "cargaPantalla";
+    private String actual = "inicio";
+    private String bienvenidonombre;
     private JPanel contentPane;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Ventana frame = new Ventana();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the frame.
-     */
     public Ventana() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 820, 672);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
-        getContentPane().setBackground(Color.decode("#7144c9"));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(100, 100, 820, 672);
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.decode("#7144c9"));
 
         setTitle("Adivina Ram's");
+
+        limpiarVentana();
+
+        this.add(panel);
+
+        this.repaint();
+        this.revalidate();
+    }
+    public void limpiarVentana(){
+
+        if(panel!= null) {
+            this.remove(panel);
+        }
+
+        if(actual.equals("inicio")){
+            panel = inicio();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+    }
+
+    public JPanel inicio(){
+        anterior = actual;
+        actual = "inicio";
+
+        JPanel inicioPanel = new JPanel();
+        inicioPanel.setSize(820, 672);
+        inicioPanel.setLocation(0, 0);
+        inicioPanel.setLayout(null);
+        inicioPanel.setBackground(Color.decode("#95E799"));
 
         JLabel imagen1 = new JLabel();
         imagen1.setSize(250, 250);
@@ -73,7 +89,91 @@ public class Ventana extends JFrame {
         iniciar.setSize(220,35);
         iniciar.setLocation(278,350);
         add(iniciar);
+
+        iniciar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "login";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+        return inicioPanel;
     }
+
+    public JPanel juego(){
+        anterior = actual;
+        actual = "juego";
+
+        JPanel juegoPanel = new JPanel();
+        juegoPanel.setSize(600, 700);
+        juegoPanel.setLocation(0, 0);
+        juegoPanel.setLayout(null);
+        juegoPanel.setBackground(Color.decode("#95E799"));
+
+
+        JLabel user = new JLabel("Ingresa tu nombre de usuario",JLabel.CENTER);
+        user.setFont(new Font("Arial",Font.BOLD,15));
+        user.setSize(300,80);
+        user.setLocation(100,200);
+        user.setForeground(Color.decode("#005F04"));
+        juegoPanel.add(user);
+
+        JTextField username = new JTextField();
+        username.setSize(270,42);
+        username.setLocation(142,260);
+        juegoPanel.add(username);
+
+        JLabel pass = new JLabel("Ingresa tu contraseña",JLabel.CENTER);
+        pass.setFont(new Font("Arial",Font.BOLD,15));
+        pass.setSize(260,80);
+        pass.setLocation(93,300);
+        pass.setForeground(Color.decode("#005F04"));
+        juegoPanel.add(pass);
+
+        JPasswordField contrasena = new JPasswordField();
+        contrasena.setSize(270,42);
+        contrasena.setLocation(142,350);
+        juegoPanel.add(contrasena);
+
+        JButton acceder = new JButton("Acceder");
+        acceder.setSize(150,30);
+        acceder.setLocation(205,410);
+        acceder.setBackground(Color.decode("#005F04"));
+        acceder.setForeground(Color.white);
+        acceder.setBorder(null);
+        acceder.setFont(new Font("Arial", Font.BOLD, 20));
+        juegoPanel.add(acceder);
+
+        JButton cancelarBorrar = new JButton("Borrar todo");
+        cancelarBorrar.setSize(100,30);
+        cancelarBorrar.setLocation(230,460);
+        cancelarBorrar.setBackground(Color.decode("#FF0000"));
+        cancelarBorrar.setForeground(Color.white);
+        cancelarBorrar.setBorder(null);
+        juegoPanel.add(cancelarBorrar);
+
+        cancelarBorrar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "menu";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+
+
+            }
+
+        });
+        return juegoPanel;
+    }
+
 
 }
 
