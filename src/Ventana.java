@@ -7,7 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Ventana extends JFrame {
     public JPanel panel = null;
-
+    public int terminar = 0;
     private String anterior = "cargaPantalla";
     private String actual = "inicio";
     private String user;
@@ -46,6 +46,14 @@ public class Ventana extends JFrame {
 
         if(actual.equals("juego")){
             panel = juego();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("finish")){
+            panel = finish();
 
             this.add(panel);
 
@@ -138,15 +146,15 @@ public class Ventana extends JFrame {
         jugador.setForeground(Color.decode("#ffbd59"));
         juegoPanel.add(jugador);
 
-        JLabel pass = new JLabel("PREGUNTA SAMPLE TEXT",JLabel.CENTER);
-        pass.setFont(new Font("Arial",Font.BOLD,15));
-        pass.setSize(260,80);
-        pass.setLocation(93,300);
-        pass.setForeground(Color.decode("#005F04"));
-        juegoPanel.add(pass);
+        JLabel pregunta = new JLabel("PREGUNTA SAMPLE TEXT",JLabel.CENTER);
+        pregunta.setFont(new Font("Arial",Font.BOLD,15));
+        pregunta.setSize(260,80);
+        pregunta.setLocation(93,300);
+        pregunta.setForeground(Color.decode("#005F04"));
+        juegoPanel.add(pregunta);
 
         JLabel imagen2 = new JLabel();
-        imagen2.setSize(200, 200);
+        imagen2.setSize(300, 300);
         ImageIcon imag2 = new ImageIcon("src/RAMSES.png");
         ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
         imagen2.setIcon(icono2);
@@ -169,22 +177,69 @@ public class Ventana extends JFrame {
         negativo.setFont(new Font("Arial", Font.BOLD, 20));
         juegoPanel.add(negativo);
 
+
         negativo.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "menu";
-                limpiarVentana();
+                terminar++;
+                if(terminar == 5){
+                    anterior = actual;
+                    actual = "finish";
+                    limpiarVentana();
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
 
 
             }
 
         });
         return juegoPanel;
+    }
+
+    public JPanel finish(){
+        anterior = actual;
+        actual = "finish";
+
+        JPanel finishPanel = new JPanel();
+        finishPanel.setSize(820, 672);
+        finishPanel.setLocation(0, 0);
+        finishPanel.setLayout(null);
+        finishPanel.setBackground(Color.decode("#7144c9"));
+
+        JLabel respuesta = new JLabel("RESPUESTA SAMPLE TEXT",JLabel.CENTER);
+        respuesta.setFont(new Font("Arial",Font.BOLD,15));
+        respuesta.setSize(260,80);
+        respuesta.setLocation(93,300);
+        respuesta.setForeground(Color.decode("#005F04"));
+        finishPanel.add(respuesta);
+
+        JButton salir = new JButton("Terminar el juego");
+        salir.setSize(220,35);
+        salir.setLocation(230,460);
+        salir.setBackground(Color.decode("#ffbd59"));
+        salir.setForeground(Color.decode("#FF721C"));
+        salir.setFont(new Font("Arial", Font.BOLD, 20));
+        finishPanel.add(salir);
+
+
+        salir.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    anterior = actual;
+                    actual = "inicio";
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
+            }
+
+        });
+
+        return finishPanel;
     }
 
 
