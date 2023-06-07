@@ -16,7 +16,7 @@ public class Ventana extends JFrame {
     public Ventana() {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(100, 100, 820, 672);
+        this.setSize(820, 672);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.decode("#7144c9"));
 
@@ -70,14 +70,14 @@ public class Ventana extends JFrame {
         ImageIcon icono1 = new ImageIcon(imag1.getImage().getScaledInstance(imagen1.getWidth(), imagen1.getHeight(), Image.SCALE_DEFAULT));
         imagen1.setIcon(icono1);
         imagen1.setLocation(270, 10);
-        add(imagen1);
+        inicioPanel.add(imagen1);
 
         JLabel inicia = new JLabel("Ingresa tu nombre", JLabel.CENTER);
         inicia.setFont(new Font("Arial", Font.BOLD, 15));
         inicia.setSize(250, 80);
         inicia.setLocation(220, 245);
         inicia.setForeground(Color.decode("#ffbd59"));
-        add(inicia);
+        inicioPanel.add(inicia);
 
         JLabel imagen2 = new JLabel();
         imagen2.setSize(200, 200);
@@ -85,12 +85,12 @@ public class Ventana extends JFrame {
         ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
         imagen2.setIcon(icono2);
         imagen2.setLocation(290, 420);
-        add(imagen2);
+        inicioPanel.add(imagen2);
 
         JTextField nombre = new JTextField();
         nombre.setSize(220,35);
         nombre.setLocation(278,300);
-        add(nombre);
+        inicioPanel.add(nombre);
 
         JButton iniciar = new JButton("¡INICIAR!");
         iniciar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -98,7 +98,7 @@ public class Ventana extends JFrame {
         iniciar.setForeground(Color.decode("#FF721C"));
         iniciar.setSize(220,35);
         iniciar.setLocation(278,350);
-        add(iniciar);
+        inicioPanel.add(iniciar);
 
         iniciar.addActionListener(new ActionListener() {
             @Override
@@ -119,7 +119,7 @@ public class Ventana extends JFrame {
         actual = "juego";
 
         JPanel juegoPanel = new JPanel();
-        juegoPanel.setSize(600, 700);
+        juegoPanel.setSize(820, 672);
         juegoPanel.setLocation(0, 0);
         juegoPanel.setLayout(null);
         juegoPanel.setBackground(Color.decode("#95E799"));
