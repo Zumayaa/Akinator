@@ -14,6 +14,7 @@ public class Ventana extends JFrame {
     private JPanel contentPane;
 
     public Ventana() {
+        this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(100, 100, 820, 672);
         this.setLocationRelativeTo(null);
@@ -42,6 +43,15 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+
+        if(actual.equals("juego")){
+            panel = juego();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
     }
 
     public JPanel inicio(){
@@ -52,7 +62,7 @@ public class Ventana extends JFrame {
         inicioPanel.setSize(820, 672);
         inicioPanel.setLocation(0, 0);
         inicioPanel.setLayout(null);
-        inicioPanel.setBackground(Color.decode("#95E799"));
+        inicioPanel.setBackground(Color.decode("#7144c9"));
 
         JLabel imagen1 = new JLabel();
         imagen1.setSize(250, 250);
@@ -94,7 +104,7 @@ public class Ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
-                actual = "login";
+                actual = "juego";
                 limpiarVentana();
 
                 repaint();
