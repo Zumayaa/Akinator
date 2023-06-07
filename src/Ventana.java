@@ -13,12 +13,18 @@ public class Ventana extends JFrame {
     private String user;
     private JPanel contentPane;
 
+    private String personaje_adivinado;
+    private String ruta;
+    ImageIcon logo = new ImageIcon("src/ranse.jpg");
+
     public Ventana() {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(820, 672);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.decode("#7144c9"));
+
+        setIconImage(logo.getImage());
 
         setTitle("Adivina Ram's");
 
@@ -54,6 +60,14 @@ public class Ventana extends JFrame {
         }
         if(actual.equals("finish")){
             panel = finish();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("posibles")){
+            panel = posibles();
 
             this.add(panel);
 
@@ -117,7 +131,7 @@ public class Ventana extends JFrame {
                 }else{
                     user = nombre.getText();
                     anterior = actual;
-                    actual = "juego";
+                    actual = "posibles";
                     limpiarVentana();
 
                     repaint();
@@ -126,6 +140,106 @@ public class Ventana extends JFrame {
             }
         });
         return inicioPanel;
+    }
+
+    public JPanel posibles(){
+        anterior = actual;
+        actual = "posibles";
+
+        JPanel posiblesPanel = new JPanel();
+        posiblesPanel.setSize(820, 672);
+        posiblesPanel.setLocation(0, 0);
+        posiblesPanel.setLayout(null);
+        posiblesPanel.setBackground(Color.decode("#7144c9"));
+
+        JLabel personajesTitle = new JLabel("Estos son los personajes que puedo adivinar!",JLabel.CENTER);
+        personajesTitle.setFont(new Font("Arial",Font.BOLD,25));
+        personajesTitle.setSize(700,80);
+        personajesTitle.setLocation(50,30);
+        personajesTitle.setForeground(Color.decode("#ffbd59"));
+        posiblesPanel.add(personajesTitle);
+
+        JLabel marcos = new JLabel();
+        marcos.setSize(170, 190);
+        ImageIcon marcIcon = new ImageIcon("src/marcos.jpeg");
+        ImageIcon marcosIcono = new ImageIcon(marcIcon.getImage().getScaledInstance(marcos.getWidth(), marcos.getHeight(), Image.SCALE_DEFAULT));
+        marcos.setIcon(marcosIcono);
+        marcos.setLocation(30, 180);
+        posiblesPanel.add(marcos);
+
+        JLabel marcosLabel = new JLabel("Marcos", JLabel.CENTER);
+        marcosLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        marcosLabel.setSize(100, 80);
+        marcosLabel.setLocation(70, 360);
+        marcosLabel.setForeground(Color.decode("#ffbd59"));
+        posiblesPanel.add(marcosLabel);
+
+        JLabel nata = new JLabel();
+        nata.setSize(170, 190);
+        ImageIcon nataIcon = new ImageIcon("src/nata.jpeg");
+        ImageIcon nataIcono = new ImageIcon(nataIcon.getImage().getScaledInstance(nata.getWidth(), nata.getHeight(), Image.SCALE_DEFAULT));
+        nata.setIcon(nataIcono);
+        nata.setLocation(218, 180);
+        posiblesPanel.add(nata);
+
+        JLabel nataLabel = new JLabel("Natanael", JLabel.CENTER);
+        nataLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        nataLabel.setSize(200, 80);
+        nataLabel.setLocation(210, 360);
+        nataLabel.setForeground(Color.decode("#ffbd59"));
+        posiblesPanel.add(nataLabel);
+
+        JLabel jenni = new JLabel();
+        jenni.setSize(170, 190);
+        ImageIcon jenniIcon = new ImageIcon("src/jenni.jpeg");
+        ImageIcon jeniIcono = new ImageIcon(jenniIcon.getImage().getScaledInstance(jenni.getWidth(), jenni.getHeight(), Image.SCALE_DEFAULT));
+        jenni.setIcon(jeniIcono);
+        jenni.setLocation(405, 180);
+        posiblesPanel.add(jenni);
+
+        JLabel jenniLabel = new JLabel("Jenni", JLabel.CENTER);
+        jenniLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        jenniLabel.setSize(200, 80);
+        jenniLabel.setLocation(385, 360);
+        jenniLabel.setForeground(Color.decode("#ffbd59"));
+        posiblesPanel.add(jenniLabel);
+
+        JLabel jett = new JLabel();
+        jett.setSize(170, 190);
+        ImageIcon jettIcon = new ImageIcon("src/jett.jpeg");
+        ImageIcon jettIcono = new ImageIcon(jettIcon.getImage().getScaledInstance(jett.getWidth(), jett.getHeight(), Image.SCALE_DEFAULT));
+        jett.setIcon(jettIcono);
+        jett.setLocation(590, 180);
+        posiblesPanel.add(jett);
+
+        JLabel jettLabel = new JLabel("Jett", JLabel.CENTER);
+        jettLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        jettLabel.setSize(200, 80);
+        jettLabel.setLocation(570, 360);
+        jettLabel.setForeground(Color.decode("#ffbd59"));
+        posiblesPanel.add(jettLabel);
+
+        JButton siguiente = new JButton("A jugar!");
+        siguiente.setSize(280,50);
+        siguiente.setLocation(260,500);
+        siguiente.setBackground(Color.decode("#ffbd59"));
+        siguiente.setForeground(Color.decode("#FF721C"));
+        siguiente.setFont(new Font("Arial", Font.BOLD, 20));
+        posiblesPanel.add(siguiente);
+
+        siguiente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "juego";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return posiblesPanel;
     }
 
     public JPanel juego(){
@@ -139,39 +253,39 @@ public class Ventana extends JFrame {
         juegoPanel.setBackground(Color.decode("#7144c9"));
 
 
-        JLabel jugador = new JLabel(user,JLabel.CENTER);
-        jugador.setFont(new Font("Arial",Font.BOLD,15));
+        JLabel jugador = new JLabel(user + ", A jugar!",JLabel.CENTER);
+        jugador.setFont(new Font("Arial",Font.BOLD,25));
         jugador.setSize(300,80);
-        jugador.setLocation(100,200);
+        jugador.setLocation(250,30);
         jugador.setForeground(Color.decode("#ffbd59"));
         juegoPanel.add(jugador);
 
-        JLabel pregunta = new JLabel("PREGUNTA SAMPLE TEXT",JLabel.CENTER);
-        pregunta.setFont(new Font("Arial",Font.BOLD,15));
-        pregunta.setSize(260,80);
-        pregunta.setLocation(93,300);
-        pregunta.setForeground(Color.decode("#005F04"));
+        JLabel pregunta = new JLabel("¿Tu personaje es humano?",JLabel.CENTER);
+        pregunta.setFont(new Font("Arial",Font.BOLD,35));
+        pregunta.setSize(500,80);
+        pregunta.setLocation(150,100);
+        pregunta.setForeground(Color.decode("#FFC51C"));
         juegoPanel.add(pregunta);
 
         JLabel imagen2 = new JLabel();
-        imagen2.setSize(300, 300);
+        imagen2.setSize(250, 250);
         ImageIcon imag2 = new ImageIcon("src/RAMSES.png");
         ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
         imagen2.setIcon(icono2);
-        imagen2.setLocation(290, 420);
+        imagen2.setLocation(275, 380);
         juegoPanel.add(imagen2);
 
         JButton afirmativo = new JButton("Sí");
-        afirmativo.setSize(220,35);
-        afirmativo.setLocation(205,410);
+        afirmativo.setSize(280,50);
+        afirmativo.setLocation(260,200);
         afirmativo.setBackground(Color.decode("#ffbd59"));
         afirmativo.setForeground(Color.decode("#FF721C"));
         afirmativo.setFont(new Font("Arial", Font.BOLD, 20));
         juegoPanel.add(afirmativo);
 
         JButton negativo = new JButton("No");
-        negativo.setSize(220,35);
-        negativo.setLocation(230,460);
+        negativo.setSize(280,50);
+        negativo.setLocation(260,300);
         negativo.setBackground(Color.decode("#ffbd59"));
         negativo.setForeground(Color.decode("#FF721C"));
         negativo.setFont(new Font("Arial", Font.BOLD, 20));
@@ -209,20 +323,41 @@ public class Ventana extends JFrame {
         finishPanel.setLayout(null);
         finishPanel.setBackground(Color.decode("#7144c9"));
 
-        JLabel respuesta = new JLabel("RESPUESTA SAMPLE TEXT",JLabel.CENTER);
-        respuesta.setFont(new Font("Arial",Font.BOLD,15));
-        respuesta.setSize(260,80);
-        respuesta.setLocation(93,300);
-        respuesta.setForeground(Color.decode("#005F04"));
+        if(terminar == 5){
+            personaje_adivinado = "Marcos";
+            ruta = "src/marcos.jpeg";
+        }
+
+        JLabel respuesta = new JLabel("Estoy pensando en, " + personaje_adivinado,JLabel.CENTER);
+        respuesta.setFont(new Font("Arial",Font.BOLD,35));
+        respuesta.setSize(500,60);
+        respuesta.setLocation(150,30);
+        respuesta.setForeground(Color.decode("#FFC51C"));
         finishPanel.add(respuesta);
 
+        JLabel imagen2 = new JLabel();
+        imagen2.setSize(250, 250);
+        ImageIcon imag2 = new ImageIcon(ruta);
+        ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
+        imagen2.setIcon(icono2);
+        imagen2.setLocation(275, 115);
+        finishPanel.add(imagen2);
+
         JButton salir = new JButton("Terminar el juego");
-        salir.setSize(220,35);
-        salir.setLocation(230,460);
+        salir.setSize(220,45);
+        salir.setLocation(290,445);
         salir.setBackground(Color.decode("#ffbd59"));
         salir.setForeground(Color.decode("#FF721C"));
         salir.setFont(new Font("Arial", Font.BOLD, 20));
         finishPanel.add(salir);
+
+        JLabel imagen1 = new JLabel();
+        imagen1.setSize(400, 250);
+        ImageIcon imag1 = new ImageIcon("src/piramide.png");
+        ImageIcon icono1 = new ImageIcon(imag1.getImage().getScaledInstance(imagen1.getWidth(), imagen1.getHeight(), Image.SCALE_DEFAULT));
+        imagen1.setIcon(icono1);
+        imagen1.setLocation(200, 385);
+        finishPanel.add(imagen1);
 
 
         salir.addActionListener(new ActionListener() {
@@ -231,6 +366,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                     anterior = actual;
                     actual = "inicio";
+                    terminar = 0;
                     limpiarVentana();
 
                     repaint();
