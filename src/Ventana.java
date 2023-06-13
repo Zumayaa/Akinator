@@ -4,18 +4,38 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+import java.util.Scanner;
 public class Ventana extends JFrame {
     public JPanel panel = null;
     public int terminar = 0;
+    private int a=0,b=0;
+
+    private Nodo marcos;
+    private Nodo jenni;
+    private Nodo nataCano;
+    private Nodo jett;
+
+    private String preg;
+    private JButton afirmativo = new JButton("Sí");
+
+    private JButton negativo = new JButton("No");
     private String anterior = "cargaPantalla";
     private String actual = "inicio";
     private String user;
+
+    private JLabel pregunta = new JLabel(preg,SwingConstants.CENTER);
     private JPanel contentPane;
 
     private String personaje_adivinado;
     private String ruta;
+
+    private String respuesta;
     ImageIcon logo = new ImageIcon("src/ranse.jpg");
+
+    private Nodo raiz = construirArbol();
+
+    Scanner scanner = new Scanner(System.in);
+
 
     public Ventana() {
         this.setVisible(true);
@@ -23,6 +43,8 @@ public class Ventana extends JFrame {
         this.setSize(820, 672);
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.decode("#7144c9"));
+
+
 
         setIconImage(logo.getImage());
 
@@ -115,6 +137,7 @@ public class Ventana extends JFrame {
         inicioPanel.add(nombre);
 
         JButton iniciar = new JButton("¡INICIAR!");
+        iniciar.setFocusPainted(false);
         iniciar.setFont(new Font("Tahoma", Font.BOLD, 15));
         iniciar.setBackground(Color.decode("#ffbd59"));
         iniciar.setForeground(Color.decode("#FF721C"));
@@ -127,7 +150,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 user = nombre.getText();
                 if(user.equals("")){
-                    JOptionPane.showMessageDialog(null,"Ingresa un nombre para jugar!","ERROR", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"¡Ingresa un nombre para jugar!","ERROR", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     user = nombre.getText();
                     anterior = actual;
@@ -142,6 +165,98 @@ public class Ventana extends JFrame {
         return inicioPanel;
     }
 
+    public Nodo construirArbol() {
+
+        Nodo marcos = new Nodo(null, null, null, "Marcos Camachito");
+        Nodo jenni = new Nodo(null, null, null, "Jenni Rivera");
+        Nodo nataCano = new Nodo(null, null, null, "Natanael Cano");
+        Nodo jett = new Nodo(null, null, null, "Jett");
+
+        Nodo videojuego = new Nodo("¿El personaje es de un videojuego?", jett, jenni, null);
+        Nodo esCantante = new Nodo("¿El personaje es un cantante?", nataCano, marcos, null);
+
+        Nodo raiz = new Nodo("¿El personaje es mujer?", videojuego, esCantante, null);
+
+        return raiz;
+    }
+
+    public void jugarAkinator(Nodo nodo) {
+        if (nodo.personaje != null) {
+            System.out.println("El personaje es: " + nodo.personaje);
+            if (nodo.personaje.equals("Marcos Camachito")){
+                personaje_adivinado = "Marcos";
+                ruta = "src/marcos.jpeg";
+            }
+            if (nodo.personaje.equals("Jenni Rivera")){
+                personaje_adivinado = "Jenni Rivera";
+                ruta = "src/jenni.jpeg";
+            }
+            if (nodo.personaje.equals("Natanael Cano")){
+                personaje_adivinado = "Natanael Cano";
+                ruta = "src/nata.jpeg";
+            }
+            if (nodo.personaje.equals("Jett")){
+                personaje_adivinado = "Jett";
+                ruta = "src/jett.jpeg";
+            }
+
+            return;
+        }
+
+
+
+
+        System.out.println(nodo.pregunta + " (responder si/no)");
+        pregunta.setText(nodo.pregunta);
+
+        afirmativo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(a!=2) {
+                    jugarAkinator(nodo.si);
+
+                }
+
+                if(a==2){
+                    anterior = actual;
+                    actual="finish";
+                    a=0;
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
+                }else {
+                    a++;
+                }
+
+            }
+        });
+
+        negativo.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(a!=2) {
+                    jugarAkinator(nodo.no);
+
+                }
+
+                if(a==2){
+                    anterior = actual;
+                    actual="finish";
+                    a=0;
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
+                }else {
+                    a++;
+                }
+            }
+
+        });
+    }
+
     public JPanel posibles(){
         anterior = actual;
         actual = "posibles";
@@ -152,7 +267,7 @@ public class Ventana extends JFrame {
         posiblesPanel.setLayout(null);
         posiblesPanel.setBackground(Color.decode("#7144c9"));
 
-        JLabel personajesTitle = new JLabel("Estos son los personajes que puedo adivinar!",JLabel.CENTER);
+        JLabel personajesTitle = new JLabel("¡Estos son los personajes que puedo adivinar!",JLabel.CENTER);
         personajesTitle.setFont(new Font("Arial",Font.BOLD,25));
         personajesTitle.setSize(700,80);
         personajesTitle.setLocation(50,30);
@@ -219,7 +334,8 @@ public class Ventana extends JFrame {
         jettLabel.setForeground(Color.decode("#ffbd59"));
         posiblesPanel.add(jettLabel);
 
-        JButton siguiente = new JButton("A jugar!");
+        JButton siguiente = new JButton("¡A jugar!");
+        siguiente.setFocusPainted(false);
         siguiente.setSize(280,50);
         siguiente.setLocation(260,500);
         siguiente.setBackground(Color.decode("#ffbd59"));
@@ -227,11 +343,14 @@ public class Ventana extends JFrame {
         siguiente.setFont(new Font("Arial", Font.BOLD, 20));
         posiblesPanel.add(siguiente);
 
+
         siguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual = "juego";
+
+                jugarAkinator(raiz);
                 limpiarVentana();
 
                 repaint();
@@ -260,10 +379,10 @@ public class Ventana extends JFrame {
         jugador.setForeground(Color.decode("#ffbd59"));
         juegoPanel.add(jugador);
 
-        JLabel pregunta = new JLabel("¿Tu personaje es humano?",JLabel.CENTER);
+
         pregunta.setFont(new Font("Arial",Font.BOLD,35));
-        pregunta.setSize(500,80);
-        pregunta.setLocation(150,100);
+        pregunta.setSize(600,80);
+        pregunta.setLocation(100,100);
         pregunta.setForeground(Color.decode("#FFC51C"));
         juegoPanel.add(pregunta);
 
@@ -275,7 +394,7 @@ public class Ventana extends JFrame {
         imagen2.setLocation(275, 380);
         juegoPanel.add(imagen2);
 
-        JButton afirmativo = new JButton("Sí");
+        afirmativo.setFocusPainted(false);
         afirmativo.setSize(280,50);
         afirmativo.setLocation(260,200);
         afirmativo.setBackground(Color.decode("#ffbd59"));
@@ -283,7 +402,7 @@ public class Ventana extends JFrame {
         afirmativo.setFont(new Font("Arial", Font.BOLD, 20));
         juegoPanel.add(afirmativo);
 
-        JButton negativo = new JButton("No");
+        negativo.setFocusPainted(false);
         negativo.setSize(280,50);
         negativo.setLocation(260,300);
         negativo.setBackground(Color.decode("#ffbd59"));
@@ -292,24 +411,6 @@ public class Ventana extends JFrame {
         juegoPanel.add(negativo);
 
 
-        negativo.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                terminar++;
-                if(terminar == 5){
-                    anterior = actual;
-                    actual = "finish";
-                    limpiarVentana();
-
-                    repaint();
-                    revalidate();
-                }
-
-
-            }
-
-        });
         return juegoPanel;
     }
 
@@ -323,15 +424,11 @@ public class Ventana extends JFrame {
         finishPanel.setLayout(null);
         finishPanel.setBackground(Color.decode("#7144c9"));
 
-        if(terminar == 5){
-            personaje_adivinado = "Marcos";
-            ruta = "src/marcos.jpeg";
-        }
 
-        JLabel respuesta = new JLabel("Estoy pensando en, " + personaje_adivinado,JLabel.CENTER);
+        JLabel respuesta = new JLabel("Estoy pensando en, " + personaje_adivinado,SwingConstants.CENTER);
         respuesta.setFont(new Font("Arial",Font.BOLD,35));
-        respuesta.setSize(500,60);
-        respuesta.setLocation(150,30);
+        respuesta.setSize(600,60);
+        respuesta.setLocation(100,30);
         respuesta.setForeground(Color.decode("#FFC51C"));
         finishPanel.add(respuesta);
 
@@ -344,9 +441,10 @@ public class Ventana extends JFrame {
         finishPanel.add(imagen2);
 
         JButton salir = new JButton("Terminar el juego");
+        salir.setFocusPainted(false);
         salir.setSize(220,45);
         salir.setLocation(290,445);
-        salir.setBackground(Color.decode("#ffbd59"));
+        salir.setBackground(Color.decode("#582813"));
         salir.setForeground(Color.decode("#FF721C"));
         salir.setFont(new Font("Arial", Font.BOLD, 20));
         finishPanel.add(salir);
@@ -364,13 +462,8 @@ public class Ventana extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                    anterior = actual;
-                    actual = "inicio";
-                    terminar = 0;
-                    limpiarVentana();
-
-                    repaint();
-                    revalidate();
+                dispose();
+                Ventana screen = new Ventana();
             }
 
         });
