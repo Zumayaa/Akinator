@@ -372,7 +372,7 @@ public class Ventana extends JFrame {
         juegoPanel.setBackground(Color.decode("#7144c9"));
 
 
-        JLabel jugador = new JLabel(user + ", A jugar!",JLabel.CENTER);
+        JLabel jugador = new JLabel(user + ", ¡A jugar!",JLabel.CENTER);
         jugador.setFont(new Font("Arial",Font.BOLD,25));
         jugador.setSize(300,80);
         jugador.setLocation(250,30);
